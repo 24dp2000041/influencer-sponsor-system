@@ -1,79 +1,76 @@
-import sys
-import csv
-from jinja2 import Template
+from flask import Flask, render_template, request, url_for, redirect
+from flask_sqlalchemy import SQLAlchemy
+from database import get_database
+from models import User, Campaign, AdRequest
+from werkzeug.security import generate_password_hash,  check_password_hash
 
-# Read the command line arguments
-input_list = sys.argv
+# def init_app():
+app = Flask(__name__)
+# #     app.debug = True
+#     print("hihihih")
+#     return app
 
-# Initialize variables
-student_course = []
-course_marks = []
-total = 0
+# app = init_app()
+# from backend.controllers import *
 
-# Read data from CSV (data.csv)
-with open("data.csv", newline='') as csvfile:
-    reader = csv.reader(csvfile)
-    for row in reader:
-        if input_list[1] == '-s':
-            if input_list[2] in row[8]:
-                total = int(row[2].strip())
-                student_course.append(row)
-        elif input_list[1] == '-c':
-            if input_list[2] in row[2]:
-                course_marks.append(int(row[2].strip()))
+@app.route("/")
+@app.route("/home")
+def home():
+    return render_template('admins-dash.html')
 
-# Handle invalid input
-if not student_course or not course_marks:
-    data = """<h1>Wrong Inputs</h1><p>Something went wrong</p>"""
-    with open('output.html', 'w') as f:
-        f.write(data)
-else:
-    if input_list[1] == '-s':
-        template_text = """
-        <h1>Student Details</h1>
-        <table border="2">
-            <tr>
-                <th>Student ID</th>
-                <th>Course ID</th>
-                <th>Marks</th>
-            </tr>
-            {% for student in student_course %}
-            <tr>
-                <td>{{ student[8].strip() }}</td>
-                <td>{{ student[1].strip() }}</td>
-                <td>{{ student[2].strip() }}</td>
-            </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="2">Total Marks</td>
-                <td>{{ total }}</td>
-            </tr>
-        </table>
-        """
-    elif input_list[1] == '-c':
-        average_marks = sum(course_marks) / len(course_marks)
-        max_marks = max(course_marks)
-        template_text = """
-        <h1>Course Details</h1>
-        <table>
-            <tr>
-                <th>Average Marks</th>
-                <th>Maximum Marks</th>
-            </tr>
-            <tr>
-                    <td>{{ average_marks }}</td>
-                <td>{{ max_marks }}</td>
-            </tr>
-        </table>
-        """
 
-# Create Jinja2 template and render
-       # Create Jinja2 template and render
-        template = Template(template_text)
-        output = template.render(average_marks=average_marks, max_marks=max_marks)
-
-# Write rendered HTML to output file
-        with open('output.html', 'w') as f:
-           f.write(output)
-
+@app.route('/admin-login', methods=['GET', 'POST'])
+def login():
+        # Handle login logic here
+    if request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        # sql entry dhd
+        db = get_databases()
+        user_cursor= db.execute("select * from users where username= ? and password = ?" ,  [username, password])
+        user =  user_cursor.fetchone()
+        # make change permanent
+        # db.commit()
+        return redirect(url_for("home"))
     
+    return render_template('login.html')
+
+@app.route('/i_r.html', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+            
+        #collectinf from form
+        username = request.form['username']
+        password = request.form['password']
+        
+        # sql entry dhd
+        db = get_database()
+        db.execute("insert into users (username, password) value (?,?)", [username, password])
+        
+        # make change permanent
+        db.commit()
+        return redirect(url_for('login.html'))
+    return render_template('i_r.html')
+
+
+
+
+@app.route('/admin/dashboard')
+def admin_dashboard():
+    # Admin dashboard logic
+    return render_template('admin_dashboard.html')
+
+@app.route('/logout')
+def logout():
+    return render_template('logout.html')
+
+@app.route('/admin-login.html')
+def admin_login():
+    return render_template('admin-login.html')
+
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
