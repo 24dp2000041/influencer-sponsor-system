@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"> <!-- third party bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div id="container">
+        <div id="panel">
+
+            <nav class="navbar navbar-expand-sm bg-primary navbar-dark" id="navi">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Influencer's Dashboard</a>
+                    <ul class="navbar-nav ml-auto">  
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link " aria-current="page" href="#"> Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="find.html">| Find |</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link "  href="stats.html">Stats |</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="/logout">Logout </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>             
+            </nav>
+<br>
+            
+            <!-- Three Columns in a Single Row -->
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <!-- Card 1 -->
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">To Do <a href="#"><img src="/static/img/icons8-edit-30.png"></a></h5>
+                                <p class="card-text">Tasks just created</p>
+                                Select the card >>
+                                <select name="card">
+                                    <option>None</option>
+                                    <option>Card1</option>
+                                    <option>Card2</option>
+                                    <option>Card3</option>
+                                </select><br>
+                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Card 2 -->
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">In Progress <a href="#"><img src="/static/img/icons8-edit-30.png"></a> | <a href="#"><img src="/static/img/icons8-delete-30.png"></a></h5>
+                                <p class="card-text">Currently doing</p>
+                                Select the card >>
+                                <select name="card">
+                                    <option>None</option>
+                                    <option>Card1</option>
+                                    <option>Card2</option>
+                                    <option>Card3</option>
+                                </select><br>
+                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- Card 3 -->
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">In Progress <a href="#"><img src="/static/img/icons8-edit-30.png"></a> | <a href="#"><img src="/static/img/icons8-delete-30.png"></a></h5>
+                                <p class="card-text">Currently doing</p>
+                                Select the card >>
+                                <select name="card">
+                                    <option>None</option>
+                                    <option>Card1</option>
+                                    <option>Card2</option>
+                                    <option>Card3</option>
+                                </select><br>
+                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-md-center">
+                <button type="button" class="btn btn-success">+ New List</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

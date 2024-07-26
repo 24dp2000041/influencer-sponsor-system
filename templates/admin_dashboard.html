@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencer's Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        /* Custom styles */
+        #navi {
+            background-color: rgb(255, 0, 0);
+            height: 70px;
+            font-size: large;
+            font-family: 'calibri', sans-serif;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.799);
+            color: #3600b4c8;
+        }
+    
+
+
+        a{
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        font-size: larger;
+        }
+        #canvas{
+            width:80%;
+            margin: auto;
+            height: 1300px;
+            border: 1px solid rgb(0, 47, 255);
+        }
+    
+
+        .profile-pic {
+            background-color: #98FB98;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-family: 'allura', sans-serif, Geneva, Verdana;
+            color: #ff0000; /* Blue color */
+            font-weight: bold;
+            font-size:70px;
+            margin-left: 250px;
+            margin-top:  10px;
+            
+        }
+
+        h3 {
+            font-family: 'Tahoma', Geneva, Verdana, sans-serif;
+            font-style: italic;
+            color: #000000; /* Green color */
+            margin-left: 20px;
+            font-size: 20px; /* Adjusted font size for smaller screens */
+        }
+
+        .button1 {
+            text-align: right;
+            margin-top: -35px;
+            margin-right: 20px;
+        }
+
+        .dashboard {
+            margin-top: 50px;
+            margin-left: 20px;
+        }
+
+        .progress {
+            width: 70%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+
+        .camps {
+            margin-left: 25px;
+            font-size: large; /* Adjusted font size for smaller screens */
+        }
+
+        .border1{
+            background-color: rgb(162, 197, 230);
+            margin-left: 25px;
+            margin-right: 70px;
+           border-radius: 5PX;
+           border-color:#000000;
+    
+        }
+
+        .border{
+            background-color: rgb(255, 255, 0);
+            margin-left: 25px;
+            margin-right: 70px;
+           border-radius: 5PX;
+           border-color:#ba1414;
+           padding-left: 20PX;
+            padding-right: 25px;
+            padding-TOP: 25px;
+            padding-bottom: 25px;
+        }
+        
+
+        .campaign-row {
+            margin-bottom: 50px; /* Adjusted margin for smaller screens */
+        }
+
+        #kaal {
+            background-color: rgb(33, 138, 243);
+            color: beige;
+            text-align: center;
+            padding: 5px; /* Adjusted padding for smaller screens */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bbg" id="main">
+        <div class="bg" id="canvas">
+            <nav class="navbar navbar-expand-sm bg navbar-dark" id="navi">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Admin's Dashboard</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="campaigns.html">Campaigns</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="find.html">| Find |</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="stats.html">Stats |</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="logout.html">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+     
+            <br>
+            <div class="dashboard">
+                <div class="profile-section">
+                    <div class="profile-pic" id="poto">Profile pic</div>
+                    <h1>Welcome  User_07</h1>
+                    <p><strong>Rating:</strong> 5</p>
+                    <p><strong>Earnings this month:</strong> ₹16,000/-</p>
+                </div>
+            </div>
+
+            <br>
+
+            <h3>Active campaigns:</h3>
+
+            <div class="camps">Campaign 1 | Progress 70% </div>
+
+            <div class="border1 border-success p-2 mb-2" id="peti1">
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                </div>
+                <div class="button1">
+                    <button type="button" class="btn btn-primary">View</button>
+                </div>
+            </div>
+  
+            <br>
+
+            <div class="camps">Campaign 2 | Progress 70% </div>
+
+            <div class="border1 border-success p-2 mb-2" id="peti2">
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                </div>
+                <div class="button1">
+                    <button type="button" class="btn btn-primary">View</button>
+                </div>
+            </div>
+
+            <br>
+
+            <h3>New Requests:</h3>
+            <br>
+
+            <div class="container">
+                <div class="campaign-row">
+                    <span class="border border-primary">
+                        <span class="req">Campaign 1 | Company 02</span>
+                        <button type="button" class="btn btn-warning btn-action">View</button>
+                        <button type="button" class="btn btn-success btn-action">Accept</button>
+                        <button type="button" class="btn btn-danger btn-action">Reject</button>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="campaign-row">
+                    <span class="border border-primary">
+                        <span class="req">Campaign 2 | Company 06</span>
+                        <button type="button" class="btn btn-warning btn-action">View</button>
+                        <button type="button" class="btn btn-success btn-action">Accept</button>
+                        <button type="button" class="btn btn-danger btn-action">Reject</button>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="campaign-row">
+                    <span class="border border-primary">
+                        <span class="req">Campaign 3 | Company 03</span>
+                        <button type="button" class="btn btn-warning btn-action">View</button>
+                        <button type="button" class="btn btn-success btn-action">Accept</button>
+                        <button type="button" class="btn btn-danger btn-action">Reject</button>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="campaign-row">
+                    <span class="border border-primary">
+                        <span class="req">Campaign 4 | Company 05</span>
+                        <button type="button" class="btn btn-warning btn-action">View</button>
+                        <button type="button" class="btn btn-success btn-action">Accept</button>
+                        <button type="button" class="btn btn-danger btn-action">Reject</button>
+                    </span>
+                </div>
+
+                <br>
+
+                <div class="campaign-row">
+                    <span class="border border-primary">
+                        <span class="req">Campaign 5 | Company 07</span>
+                        <button type="button" class="btn btn-warning btn-action">View</button>
+                        <button type="button" class="btn btn-success btn-action">Accept</button>
+                        <button type="button" class="btn btn-danger btn-action">Reject</button>
+                    </span>
+                </div>
+            </div>
+
+            <br>
+
+            <div id="footer">
+                <div class="border border-success p-2 mb-2" id="kaal">
+                    24dp2000041 © copyright 2024
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS bundle (Popper and Bootstrap JS) -->
+
+
+    </body>
+</html>

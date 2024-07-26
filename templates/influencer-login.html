@@ -1,0 +1,58 @@
+
+{% extends "loginbase.html" %} 
+
+{% block title %}Influencer Login{% endblock %} 
+{% block content %}
+
+<div id="main"> 
+    <div id="canvas">
+        <div id="form-body">
+           <h1 style="color:rgba(255, 202, 9, 0.966); font-family:cursive;">Influencer Login</h1>
+           <br>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                        {% for category, message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endwith %}
+                     
+           
+           <form method="POST" action="{{ url_for('influencer_login') }}">
+            
+                   
+              <div class="mb-3">
+              <label for="email" class="form-label">Email ID</label>
+              <input type="text" class="form-control" id="email" name="email" placeholder="Admin123">
+          </div>
+          <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Input password">
+          </div>
+    
+              <div class="btn-group w-100 mb-3" role="group" aria-label="Basic mixed styles example">
+                <a href="/influencer-login" class="btn btn-warning">Influencer Login</a>
+                <a href="/admin-login" class="btn btn-primary">&nbsp;&nbsp;Admin Login &nbsp;&nbsp;</a>
+                <a href="/sponsor-login" class="btn btn-success">Sponsor Login</a>
+
+              </div>
+    
+              <div class="text-center">
+                <button type="submit" class="btn btn-danger">Submit</button>
+                <br>
+                <br>
+                <span>
+                  Not registered? <a href="{{ url_for('register') }}">Register Here</a>
+                </span>
+                <br>
+                <br>
+              </div>
+             </form>     
+              
+            </div>̥
+        </div>
+       </div>
+       {% endblock %}
