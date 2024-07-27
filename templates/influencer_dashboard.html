@@ -3,101 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css"> <!-- third party bootstrap -->
+    <link rel="stylesheet" href="/static/style.css"> <!-- third-party bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Dashboard</title>
+
+    <style>
+        h1{
+
+            margin-left:50px ;
+        }
+        .profile-pic {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin-top: 20px;
+            margin-left: 50px;
+            display: flex;
+        }
+        .profile-pic img {
+            width: 75%;
+            height: 75%;
+            border-radius: 0%;
+        }
+        .container1 {
+            margin-top: -250px;
+            margin-left: 300px;
+        }
+
+        .card-body{
+            color: rgba(0, 42, 250, 0.962);
+        }
+
+      .card-body{
+
+
+      }  
+    </style>
 </head>
 <body>
-    <div id="container">
-        <div id="panel">
-
             <nav class="navbar navbar-expand-sm bg-primary navbar-dark" id="navi">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Influencer's Dashboard</a>
-                    <ul class="navbar-nav ml-auto">  
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link " aria-current="page" href="#"> Info</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="find.html">| Find |</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link "  href="stats.html">Stats |</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="/logout">Logout </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>             
+                    <ul class="navbar-nav ml-auto">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/influencer_dashboard">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/campaigni">Campaigns</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/stats_influencer">Stats</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" aria-current="page" href="/request_i">Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/logout">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
             </nav>
-<br>
+
+            <br><br>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                    {% for category, message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% endwith %}
             
-            <!-- Three Columns in a Single Row -->
-            <div class="container">
+            <h1>Welcome, {{ user.fname }}</h1>
+
+            <div id="container">
+                <div id="panel">
+            <br>
+            <div class="profile-pic" data-bs-toggle="modal" data-bs-target="#profilePicModal">
+                        
+
+                <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Profile Picture">
+            </div>
+
+            <!-- Profile Picture Modal -->
+            <div class="modal fade" id="profilePicModal" tabindex="-1" aria-labelledby="profilePicModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="profilePicModalLabel">Upload New Profile Picture</h5>
+                        </div>
+                        <form method="POST" action="{{ url_for('update_profile_pic') }}" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="profile_pic" class="form-label">Choose a new profile picture:</label>
+                                    <input type="file" id="profile_pic" name="profile_pic" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Display user profile details -->
+            <div class="container1">
                 <div class="row">
                     <div class="col">
-                        <!-- Card 1 -->
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">To Do <a href="#"><img src="/static/img/icons8-edit-30.png"></a></h5>
-                                <p class="card-text">Tasks just created</p>
-                                Select the card >>
-                                <select name="card">
-                                    <option>None</option>
-                                    <option>Card1</option>
-                                    <option>Card2</option>
-                                    <option>Card3</option>
-                                </select><br>
-                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
+                        <div class="inside">
+                            <h1>Profile Details</h1>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Name: {{ user.fname }} {{ user.lname }}</h5>
+                                            <p class="card-text">Email: {{ user.email }}</p>
+                                            <p class="card-text">Category: {{ user.category }}</p>
+                                            <p class="card-text">Role: {{ user.role }}</p>
+                                            <p class="card-text">Info: {{ user.info }}</p>
+                                            <p class="card-text">Rating: {{ user.rating }}</p>
+                                            <p class="card-text">Earnings: ${{ user.earnings }}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <!-- Card 2 -->
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">In Progress <a href="#"><img src="/static/img/icons8-edit-30.png"></a> | <a href="#"><img src="/static/img/icons8-delete-30.png"></a></h5>
-                                <p class="card-text">Currently doing</p>
-                                Select the card >>
-                                <select name="card">
-                                    <option>None</option>
-                                    <option>Card1</option>
-                                    <option>Card2</option>
-                                    <option>Card3</option>
-                                </select><br>
-                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
+                            
+                            <!-- Button to trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+                                Update
+                            </button>
+
+                            <!-- Update User Details Modal -->
+                            <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateUserModalLabel">Update Profile Details</h5>
+                                        </div>
+                                        <form method="POST" action="{{ url_for('update_user_detail_influencer') }}">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="fname" class="form-label">First Name:</label>
+                                                    <input type="text" id="fname" name="fname" class="form-control" value="{{ user.fname }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="lname" class="form-label">Last Name:</label>
+                                                    <input type="text" id="lname" name="lname" class="form-control" value="{{ user.lname }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email:</label>
+                                                    <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="category" class="form-label">Category:</label>
+                                                    <input type="text" id="category" name="category" class="form-control" value="{{ user.category }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="role" class="form-label">Role:</label>
+                                                    <input type="text" id="role" name="role" class="form-control" value="{{ user.role }}" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="info" class="form-label">Info:</label>
+                                                    <textarea id="info" name="info" class="form-control" rows="3" required>{{ user.info }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <!-- Card 3 -->
-                        <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">In Progress <a href="#"><img src="/static/img/icons8-edit-30.png"></a> | <a href="#"><img src="/static/img/icons8-delete-30.png"></a></h5>
-                                <p class="card-text">Currently doing</p>
-                                Select the card >>
-                                <select name="card">
-                                    <option>None</option>
-                                    <option>Card1</option>
-                                    <option>Card2</option>
-                                    <option>Card3</option>
-                                </select><br>
-                                <a href="#">New</a><a href="#">Edit</a><a href="#">Delete</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-md-center">
-                <button type="button" class="btn btn-success">+ New List</button>
-            </div>
+
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

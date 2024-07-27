@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            margin-bottom: 0;
+        }
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            height: 100vh;
+            padding: 20px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .table thead th {
+            background-color: #2f8e3dd3;
+            color: white;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+        .sidebar h2 {
+            font-size: 1.5rem;
+        }
+        .sidebar .list-group-item {
+            cursor: pointer;
+        }
+        .sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+        .status-pending {
+            color: #dfab00;
+            background-color: #fff3cd;
+        }
+        .status-accepted {
+            color: #00ff3c;
+            background-color: #d4edda;
+        }
+        .status-rejected {
+            color: #fc0019;
+            background-color: #f8d7da;
+        }
+        .btn-accept, .btn-reject {
+            display: inline-block;
+            width: 100px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-sm bg-success navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sponsor's Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sponsor_dashboard">Profile</a>
+                    </li>                            
+                    <li class="nav-item">
+                        <a class="nav-link" href="/find_sponsor">Find</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" href="/campaigns">Campaigns</a>
+                    </li> 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stats_sponsor">Stats</a>
+                    </li>
+                    <li class="nav-item">                      
+                        <a class="nav-link active" href="/request_s">Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>             
+    </nav>
+
+
+    <div class="container-fluid">
+<div class="row">
+         <div class="col-md-9 content">
+                <h1 class="mb-4">Requests</h1>
+   {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                {% for category, message in messages %}
+                    {{ message }}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        {% endwith %}
+                <form method="POST" action="{{ url_for('delete_requests') }}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>ID</th>
+                                    <th>Influencer Name</th>
+                                    <th>Campaign</th>
+                                    <th>Message</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                {% for request in requests %}
+                                <tr>
+                                    <td><input type="checkbox" name="request_ids" value="{{ request.id }}"></td>
+                                    <td>{{ request.id }}</td>
+                                    <td>{{ request.influencer.fname }} {{ request.influencer.lname }}</td>
+                                    <td>{{ request.campaign.name }}</td>
+                                    <td>{{ request.message }}</td>
+                                    <td class="{% if request.status == 'Pending' %}
+                                    status-pending
+                                    {% elif request.status == 'Accepted' %}
+                                    status-accepted
+                                    {% elif request.status == 'Rejected' %}
+                                    status-rejected
+                                    {% endif %}">
+                                        {{ request.status }}
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="{{ url_for('update_request_status', request_id=request.id, status='Accepted') }}" style="display:inline;">
+                                            <button type="submit" class="btn btn-success btn-action btn-accept">Accept</button>
+                                        </form>
+                                        <form method="POST" action="{{ url_for('update_request_status', request_id=request.id, status='Rejected') }}" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-action btn-reject">Reject</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                        </tbody>               
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Delete Selected</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+  
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script>
+        // JavaScript to handle dynamic influencer ID in the modal
+        var sendRequestModal = document.getElementById('sendRequestModal');
+        sendRequestModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var influencerId = button.getAttribute('data-influencer-id');
+            var modalInput = sendRequestModal.querySelector('#influencerId');
+            modalInput.value = influencerId;
+        });
+    </script>
+</body>
+</html>

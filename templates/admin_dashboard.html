@@ -12,12 +12,14 @@
             background-color: rgb(255, 0, 0);
             height: 70px;
             font-size: large;
-            font-family: 'calibri', sans-serif;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
             border-bottom: 1px solid rgba(255, 0, 0, 0.799);
             color: #3600b4c8;
         }
     
-
+#main{
+    background-color: hwb(0 88% 9%);
+}
 
         a{
         font-family:Georgia, 'Times New Roman', Times, serif;
@@ -28,15 +30,25 @@
             margin: auto;
             height: 1300px;
             border: 1px solid rgb(0, 47, 255);
+            box-shadow: 0 0 45px rgba(0, 0, 0, 0.5); 
+            background-color:rgb(225, 231, 227)
         }
-    
-
-        .profile-pic {
-            background-color: #98FB98;
-            width: 100px;
-            height: 100px;
+            .profile-pic {
+            width: 300px;
+            height: 300px;
             border-radius: 50%;
             margin-top: 20px;
+            margin-left: 50px;
+            display: flex;
+            box-shadow: 50px;
+            border-color:red ;
+        }
+        .profile-pic img {
+            width: 75%;
+            height: 75%;
+            border-radius: 0%;
+            box-shadow: 50px;
+            border-color:red ;
         }
 
         h1 {
@@ -77,6 +89,7 @@
 
         .camps {
             margin-left: 25px;
+            
             font-size: large; /* Adjusted font size for smaller screens */
         }
 
@@ -86,7 +99,7 @@
             margin-right: 70px;
            border-radius: 5PX;
            border-color:#000000;
-    
+           box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);     
         }
 
         .border{
@@ -99,6 +112,7 @@
             padding-right: 25px;
             padding-TOP: 25px;
             padding-bottom: 25px;
+            
         }
         
 
@@ -118,7 +132,7 @@
 <body>
     <div class="bbg" id="main">
         <div class="bg" id="canvas">
-            <nav class="navbar navbar-expand-sm bg navbar-dark" id="navi">
+            <nav class="navbar navbar-expand-sm bg-danger navbar-dark" id="navi">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Admin's Dashboard</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,31 +141,73 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="campaigns.html">Campaigns</a>
+                                <a class="nav-link active" href="/admin_dashboard">Info</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/find_admin">Find</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="find.html">| Find |</a>
+                                <a class="nav-link " href="/stats_admin">Stats</a>
                             </li>
+                            
                             <li class="nav-item">
-                                <a class="nav-link active" href="stats.html">Stats |</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.html">Logout</a>
+                                <a class="nav-link" href="/logout">Logout</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-     
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                    {% for category, message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+            {% endwith %}
             <br>
             <div class="dashboard">
                 <div class="profile-section">
                     <div class="profile-pic" id="poto">Profile pic</div>
-                    <h1>Welcome  User_07</h1>
+                    <h1>Welcome, {{ fname }}</h1>
                     <p><strong>Rating:</strong> 5</p>
                     <p><strong>Earnings this month:</strong> ₹16,000/-</p>
                 </div>
             </div>
+            <div class="profile-pic" data-bs-toggle="modal" data-bs-target="#profilePicModal">
+                        
+
+                <img src="{{ url_for('static', filename='profile_pics/' ~ current_user.profile_pic) }}" alt="Profile Picture">
+            </div>
+
+            <!-- Profile Picture Modal -->
+            <div class="modal fade" id="profilePicModal" tabindex="-1" aria-labelledby="profilePicModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="profilePicModalLabel">Upload New Profile Picture</h5>
+                        </div>
+                        <form method="POST" action="{{ url_for('update_profile_pic1') }}" enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="profile_pic" class="form-label">Choose a new profile picture:</label>
+                                    <input type="file" id="profile_pic" name="profile_pic" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <br>
 
             <br>
 

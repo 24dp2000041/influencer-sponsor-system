@@ -39,8 +39,17 @@ Admin Login
 <div id="main"> 
     <div id="canvas">
         <div id="form-body">
-           <h1 style="color:rgb(0, 94, 255); font-family:cursive;">Admin Login</h1>
-
+           <h1 style="color:rgb(255, 0, 0); font-family:cursive;">Admin Login</h1>
+           {% with messages = get_flashed_messages(with_categories=true) %}
+           {% if messages %}
+               <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                   {% for category, message in messages %}
+                       {{ message }}
+                   {% endfor %}
+                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+           {% endif %}
+       {% endwith %}
            <form method="POST" action="{{ url_for('admin_login') }}">
 
                    

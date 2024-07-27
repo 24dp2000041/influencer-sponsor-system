@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"> <!-- third party bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            margin-bottom: 0;
+        }
+        .sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            height: 100vh;
+            padding: 20px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .table thead th {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+        .sidebar h2 {
+            font-size: 1.5rem;
+        }
+        .sidebar .list-group-item {
+            cursor: pointer;
+        }
+        .sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+        .status-pending {
+            color: #dfab00;
+            background-color: #fff3cd;
+        }
+        .status-accepted {
+            color: #00ff3c;
+            background-color: #d4edda;
+        }
+        .status-rejected {
+            color: #fc0019;
+            background-color: #f8d7da;
+        }
+        .btn-accept, .btn-reject {
+            display: inline-block;
+            width: 100px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark" id="navi">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Influencer's Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/influencer_dashboard">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/campaigni">Campaigns</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stats_influencer">Stats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/request_i">Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <br>
+    <h1>Requests</h1>
+    <br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 content">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+                        {% for category, message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+                {% endwith %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Influencer Name</th>
+                                <th>Campaign</th>
+                                <th>Message</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in requests %}
+                            <tr>
+                                <td>{{ request.id }}</td>
+                                <td>{{ request.influencer.fname }} {{ request.influencer.lname }}</td>
+                                <td>{{ request.campaign.name }}</td>
+                                <td>{{ request.message }}</td>
+                                <td class="status-{{ request.status|lower }}">
+                                    {{ request.status }}
+                                </td>
+                                <td>
+                                    <form method="POST" action="{{ url_for('delete_requesti', id=request.id) }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-action">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
