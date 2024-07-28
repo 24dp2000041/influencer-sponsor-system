@@ -34,8 +34,8 @@
           </div>
     
               <div class="btn-group w-100 mb-3" role="group" aria-label="Basic mixed styles example">
-                <a href="/influencer-login" class="btn btn-warning">Influencer Login</a>
-                <a href="/admin-login" class="btn btn-primary">&nbsp;&nbsp;Admin Login &nbsp;&nbsp;</a>
+                <a href="/influencer_login" class="btn btn-warning">Influencer Login</a>
+                <a href="/admin_login" class="btn btn-primary">&nbsp;&nbsp;Admin Login &nbsp;&nbsp;</a>
                 <a href="/sponsor-login" class="btn btn-success">Sponsor Login</a>
 
               </div>
@@ -45,7 +45,10 @@
                 <br>
                 <br>
                 <span>
-                  Not registered? <a href="{{ url_for('register') }}">Register Here</a>
+                  Not registered? 
+
+                  <button type="button" class="btn btn-yellow" onclick="window.location.href='{{ url_for('home') }}'">Go to Registration Page</button>
+
                 </span>
                 <br>
                 <br>

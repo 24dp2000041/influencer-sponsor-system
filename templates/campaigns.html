@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Campaigns</title>
     <style>
@@ -16,12 +18,23 @@
             background-color: rgb(228, 0, 34);
             color: antiquewhite;
         }
+
+        #kaal {
+            background-color: rgb(33, 138, 243);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 0px;
+            margin-top: 180px;
+            height: 70px;
+        }
+        
+
     </style>
 </head>
 <body>    
     <div class="container1">    
         <div id="panel">
-            <nav class="navbar navbar-expand-sm bg-success navbar-dark" id="navi">
+            <nav class="navbar navbar-expand-sm bg-success navbar-dark fixed-top" id="navi">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Sponsor's Dashboard</a>
                     <ul class="navbar-nav ml-auto">  
@@ -53,7 +66,8 @@
                 </div>             
             </nav>
         </div>
-
+<br>
+<br>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
@@ -199,5 +213,11 @@
     </div>
     <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div id="footer">
+        <div class="border border-success p-2 mb-2" id="kaal">
+                      24dp2000041 © copyright 2024        
+        </div>
+  
+
 </body>
 </html>

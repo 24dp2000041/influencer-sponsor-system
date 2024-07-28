@@ -41,7 +41,9 @@
                     <button type="submit" class="btn btn-danger">Submit</button>
                     <br><br>
                     <span>
-                        Not registered? <a href="{{ url_for('register') }}">Register Here</a>
+                        Not registered?
+          <button type="button" class="btn btn-yellow" onclick="window.location.href='{{ url_for('register') }}'">Go to Registration Page</button>
+
                     </span>
                     <br><br>
                 </div>

@@ -1,347 +1,257 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Find - Admin's </title>
-    <link rel="stylesheet" href="style-dash.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-<style>
-   
-   #navi{
-    background-color: rgb(0, 42, 255);
-    height: 70px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-   font-size: large;
-    font-family: 'calibri', sans-serif;
-   border-bottom: 1px solid rgba(255, 0, 0, 0.799);
-   }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-    h1 {
-        font-family: 'allura', sans-serif, Geneva, Verdana;
-        color: #ff0000; /* Blue color */
-        font-weight: bold;
-        font-size:70px;
-        margin-left: 20px;
-        margin-top:  90px;
-    }
-    h3 {
-        font-family: 'Tahoma', Geneva, Verdana, sans-serif;
-        font-style: italic;
-        color: #000000; /* Green color */
-        margin-left: 20px;}
-        
-        .button1{
-text-align: right;
-margin-top: -35px;
-margin-right: 40px;
-    }
-        #canvas{
-        width:70%;
-        margin: auto;
-        height: 550px;
-        border: 1px solid rgb(0, 42, 255);
-
-    }
-    #formbody{
-      border: 2px solid rgb(183, 21, 21);
-       width: 430px;
-       height: 400px;
-      margin: auto;
-      margin-top: 100px;
-      padding: 10px ;
-      border-radius: 7px;
-    }
-    
-    *{
-        margin: .14px;
-    }
-                      .progress{
-        width: 75%;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 20px;
-        margin-right: 10px;
-        border: 5px ;
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Find Campaigns and Influencers</title>
+    <style>
+        .container1 {
+            margin: 50px;
         }
-         .border1
-    {
-      border: 3px;
+        .search-form {
+            margin-bottom: 20px;
+        }
+        #sp {
+            font-size: 50px;
+        }
+        .star-rating {
+            font-size: 1.5em;
+            color: gold;
+        }
+        .avg-rating {
+            font-size: 1.2em;
+            color: gray;
+        }
+        .img-fluid {
+            border-radius: 10px;
+            width: 300px;
+            height: 300px;
         }
 
-    #peti1
-    {
-   margin-right: 150px;
-   margin-left: 150px;
-   border-radius: 5px;
-   background-color: rgb(255, 240, 221);
-    }
-    #peti2
-    {
-        margin-right: 150px;
-        margin-left: 150px;
-   border-radius: 5px;
-   background-color: rgb(191, 215, 167);
-    }
-    #peti3
-    {
-        margin-right: 150px;
-        margin-left: 150px;
-   border-radius: 5px;
-   background-color: rgb(227, 195, 167);
-    }
-    #peti4
-    {
-        margin-right: 150px;
-        margin-left: 150px;
-   border-radius: 5px;
-   background-color: rgb(169, 233, 218);
-    }
-    #peti5
-    {
-   margin-right: 25px;
-   margin-left: 25px;
-   border-radius: 5px;
-   background-color: rgb(120, 120, 213);
-    }
-
-#kaal{
-        margin-bottom: -5000px;
-        margin-top: 100px;
-        background-color: rgb(33, 138, 243);
-        margin-left: -700px;
-        display: flex;
-        margin-right: -700px;
-     height: 250px;
-        }
-
-      
-body{
-
-    background-color: #35abdf;
-}
-.domain-search {
-    margin: 0;
-    padding:2px 0;
-}
-
-
-.bg-pblue {
-    background-color: #35abdf;
-}
-
-.domain-search .form-title {
-    margin-top: 0;
-    margin-bottom: 2px;
-    color: #fff;
-    font-family: "Poppins", sans-serif;
-    font-weight: 100;
-}
-        
-        .domain-search p {
-            color: #B0E7FF;
-            margin: 0;
-        }
-                .domain-search .input-group {
-            -webkit-box-shadow: 25px 35px 18px 4px rgba(0, 0, 0, 0.1);
-            box-shadow: 131px 18px 23px 0px rgba(0, 0, 0, 0.1);
+  
+        #kaal {
+            background-color: rgb(33, 138, 243);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 0px;
+            margin-top: 180px;
+            height: 70px;
         }
         
 
-.domain-search .input-group-addon {
-    border: none;
-}
 
-.domain-search .form-title strong {
-    display: block;
-}
-
-
-.domain-search .form-control {
-    height: 70px;
-    border-radius: 5px;
-    border: none;
-}
-
-.domain-search .form-control {
-    height: 40px;
-    width: 20px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 30px;
-    margin-left: 136px;
-    margin-right: -155px;
-
-}
-
-
-
-
-.domain-search .form-control:focus {
-
-    box-shadow: 0px 0px 0px 0px #ffffff !important;
-    
-    }
-    
-    .input-group .input-group-addon [type="submit"], .input-group .input-group-addon button {
-        border: none;
-        border-radius: 0;
-    }
-    
-               
-        .input-group .input-group-addon [type="submit"], .input-group .input-group-addon button {
-            border: none;
-            border-radius: 0;
-            margin-top: 29.7px;
-            margin-left: 155px;
-        }
-        
-        .domain-search .btn {
-            padding: 0px 54px 0px 50px;            
-            line-height: 40px;
-            margin-right: -100px;
-       
-
-        }
-                
-        .btn-primary11 {
-            padding: 0 30px;
-            line-height: 40px;
-            background: #ff4d00;
-            color: #ffffff;
-        }
-        
-        .btn-primary {
-            padding: 0 30px;
-            line-height: 40px;
-            background: hsl(209, 87%, 36%);
-            color: #fff;
-        }
-        
-.btn-primary11:hover {
-    color: #fff;
-    background-color: #286090;
-    border-color: #204d74;
-}
-   
-.domain-search .input-group + p {
-    color: #fff;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 100;
-    margin-top: 15px;
-    margin-bottom: 0;
-}
-        
-.domain-search .input-group + p strong {
-    margin-right: 40px;
-}
-#sponsor-name {
-color: #000000;
-    text-align: left;
-    font-size: x-large;
-    margin-left: 25px;
-   margin-top: 7px;;
-     text-shadow:rgb(70, 46, 46) .25px .25px;
-   font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-</style>
+    </style>
 </head>
 <body>
-    <div class="bbg" id="main">
-        <div class="bg"  id="canvas">
-            <nav class="navbar navbar-expand-sm bg-primary navbar-dark" id="navi">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Admin's Dashboard</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link " aria-current="page" href="admin-login.html"> Info</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" href="find.html">| Find |</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link "  href="stats.html">Stats |</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " href="logout.html">Logout </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>             
-            </nav>
-     
-<br>
-<form class="row domain-search bg-pblue">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <h2 class="form-title"></h2>
-                <p>Search </p>
-            </div>
-            <div class="col-md-9">
-                <div class="input-group">
-                    <input type="search" class="form-control" placeholder="&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Search now">
-                        <span class="input-group-addon"><input type="submit" value="Filter" class="btn btn-primary11"></span>
-
+    <nav class="navbar navbar-expand-sm bg-danger navbar-dark fixed-top" id="navi">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Admin's Dashboard</a>
+            <ul class="navbar-nav ml-auto">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin_dashboard">Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/find_admin">Find</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stats_admin">Stats</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
                 </div>
-                
+            </ul>
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="alert alert-dismissible fade show {{ 'alert-' + messages[0][0] }}" role="alert">
+            {% for category, message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="container1">
+        <div class="search-form">
+            <form method="GET" action="{{ url_for('find_admin') }}">
+                <div class="mb-3">
+                    <label for="search" class="form-label" id="sp">Search Campaigns and Influencers</label>
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Search..." required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+
+        <h2>Campaigns</h2>
+        <div class="row">
+            {% for campaign in campaigns %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ campaign.name }}</h5>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#campaignModal{{ campaign.id }}">
+                            View Details
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Campaign Details Modal -->
+            <div class="modal fade" id="campaignModal{{ campaign.id }}" tabindex="-1" aria-labelledby="campaignModalLabel{{ campaign.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="campaignModalLabel{{ campaign.id }}">{{ campaign.name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ campaign.description }}</p>
+                            <p>Start Date: {{ campaign.start_date }}</p>
+                            <p>End Date: {{ campaign.end_date }}</p>
+                            <p>Budget: ${{ campaign.budget }}</p>
+                            <p>Visibility: {{ campaign.visibility }}</p>
+                            <p>Goals: {{ campaign.goals }}</p>
+                            <form method="POST" action="{{ url_for('delete_campaigna', id=campaign.id) }}">
+                                <button type="submit" class="btn btn-danger">Delete Campaign</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2>Influencers</h2>
+        <div class="row">
+            {% for influencer in influencers %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ influencer.fname }} {{ influencer.lname }}</h5>
+                        <p>Rating: <span class="star-rating">
+                            {% set rating = influencer.rating if influencer.rating is not none else 0 %}
+                            {% for i in range(5) %}
+                                {% if i < rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </span> ({{ rating }})</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#influencerModal{{ influencer.id }}">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Influencer Details Modal -->
+            <div class="modal fade" id="influencerModal{{ influencer.id }}" tabindex="-1" aria-labelledby="influencerModalLabel{{ influencer.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="influencerModalLabel{{ influencer.id }}">{{ influencer.fname }} {{ influencer.lname }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{ url_for('static', filename='profile_pics/' ~ influencer.profile_pic) }}" class="img-fluid" alt="Profile Picture">
+                            <br>
+                            <p>Category: {{ influencer.category }}</p>
+                            <p>Info: {{ influencer.info }}</p>
+                            <p>Earnings: ${{ influencer.earnings }}</p>
+                            <form method="POST" action="{{ url_for('rate_influencer', id=influencer.id) }}">
+                                <div class="mb-3">
+                                    <label for="rating" class="form-label">Rating :</label>
+                                    <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" name="rating" value="{{ influencer.rating if influencer.rating is not none else 0 }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Rating</button>
+                            </form>
+                            <br>
+                            <form method="POST" action="{{ url_for('delete_influencer', id=influencer.id) }}">
+                                <button type="submit" class="btn btn-danger">Delete Influencer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2>Sponsors</h2>
+        <div class="row">
+            {% for sponsor in sponsors %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ sponsor.fname }} {{ sponsor.lname }}</h5>
+                        <p>Rating: <span class="star-rating">
+                            {% set rating = sponsor.rating if sponsor.rating is not none else 0 %}
+                            {% for i in range(5) %}
+                                {% if i < rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </span> ({{ rating }})</p>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sponsorModal{{ sponsor.id }}">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sponsor Details Modal -->
+            <div class="modal fade" id="sponsorModal{{ sponsor.id }}" tabindex="-1" aria-labelledby="sponsorModalLabel{{ sponsor.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="sponsorModalLabel{{ sponsor.id }}">{{ sponsor.fname }} {{ sponsor.lname }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Category: {{ sponsor.category }}</p>
+                            <p>Info: {{ sponsor.info }}</p>
+                            <p>Earnings: ${{ sponsor.earnings }}</p>
+                            <form method="POST" action="{{ url_for('rate_sponsor', id=sponsor.id) }}">
+                                <div class="mb-3">
+                                    <label for="rating" class="form-label">Rating :</label>
+                                    <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" name="rating" value="{{ sponsor.rating if sponsor.rating is not none else 0 }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Rating</button>
+                            </form>
+                            <br>
+                            <form method="POST" action="{{ url_for('delete_sponsor', id=sponsor.id) }}">
+                                <button type="submit" class="btn btn-danger">Delete Sponsor</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-</form>
-<br>
-          
-<div class="border border-success p-2 mb-2" id="peti1">
-    <div id="sponsor-name"> <strong>Sponsor Name | Details</strong></div>
-               <div class="button1">
-                  <button type="button" class="btn btn-primary">Primary</button>
-               </div>
-          </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <div id="footer">
+        <div class="border border-success p-2 mb-2" id="kaal">
+                      24dp2000041 © copyright 2024        
+        </div>
   
-  
-
-<div class="border border-success p-2 mb-2" id="peti2">
-    <div id="sponsor-name"> <strong>Campaign Name | Details</strong></div>
-
-               <div class="button1">
-                  <button type="button" class="btn btn-primary">Primary</button>
-               </div>
-          </div>
-
-
-
-  <div class="border border-success p-2 mb-2" id="peti3">
-    <div id="sponsor-name"> <strong>Inf Name | Details</strong></div>
-
-               <div class="button1">
-                  <button type="button" class="btn btn-primary">Primary</button>
-               </div>
-          </div>
-  
-
-          <div class="border border-success p-2 mb-2" id="peti4">
-            <div id="sponsor-name"> <strong>Inf</strong> Name | Details</strong></div>
-
-                       <div class="button1">
-                          <button type="button" class="btn btn-primary">Primary</button>
-                       </div>
-                  </div>
-          
-
-              
-                              
-
-        
-    </div>
-    <div id="kaal">
-        <!-- Footer content goes here -->
-    </div>
 </body>
 </html>

@@ -9,6 +9,7 @@ from wtforms import StringField, PasswordField, TextAreaField,FileField, RadioFi
 from wtforms.validators import Email, EqualTo, DataRequired
 from werkzeug.utils import secure_filename
 from os import path
+import statistics
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -150,7 +151,7 @@ def register():
         db.session.commit()
         flash('Your account has been created!', 'success')
         return redirect(url_for('register'))
-    return render_template('temp.html', form=form)
+    return render_template('register.html', form=form)
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
@@ -170,11 +171,10 @@ def admin_login():
 @app.route('/admin_dashboard')
 @login_required
 def admin_dashboard():
-    if current_user.role != 'admin':
-        flash('Access denied')
-        return redirect(url_for('home'))
-    # Admin dashboard logic
-    return render_template('admin_dashboard.html',fname=current_user.fname,profile_pic=current_user.profile_pic)
+     all_campaigns = Campaign.query.all() 
+      # Admin dashboard logic
+      # Fetch all campaigns from the database
+     return render_template('admin_dashboard.html',campaigns=all_campaigns,profile_pic=current_user.profile_pic)
 
 
 @app.route('/influencer_login', methods=['GET', 'POST'])
@@ -316,8 +316,8 @@ def request_s():
 @app.route('/request_i')
 @login_required
 def request_i():
-    requests = AdRequest.query.all()
-    return render_template('request_i.html', requests=requests)
+    user_requests = AdRequest.query.filter_by(influencer_id=current_user.id).all()
+    return render_template('request_i.html', requests=user_requests)
 
 
 
@@ -424,12 +424,12 @@ def find_sponsor():
 @app.route('/find_admin', methods=['GET'])
 @login_required
 def find_admin():
-    search_query = request.args.get('find_admin')
-    
+    search_query = request.args.get('search', '')
+
     # Search in Campaigns
     campaigns = Campaign.query.filter(
-        Campaign.name.ilike(f'%{search_query}%') |
-        Campaign.description.ilike(f'%{search_query}%')
+        (Campaign.name.ilike(f'%{search_query}%')) |
+        (Campaign.description.ilike(f'%{search_query}%'))
     ).all()
 
     # Search in Influencers
@@ -437,9 +437,62 @@ def find_admin():
         (User.fname.ilike(f'%{search_query}%')) |
         (User.lname.ilike(f'%{search_query}%')) |
         (User.email.ilike(f'%{search_query}%'))
-    ).filter(User.role == 'admin').all()
+    ).filter(User.role == 'influencer').all()
 
-    return render_template('find_admin.html', campaigns=campaigns, influencers=influencers)
+    sponsors = User.query.filter(
+        (User.fname.ilike(f'%{search_query}%')) |
+        (User.lname.ilike(f'%{search_query}%')) |
+        (User.email.ilike(f'%{search_query}%'))
+    ).filter(User.role == 'sponsor').all()
+   
+    
+    return render_template('find_admin.html', campaigns=campaigns, influencers=influencers, sponsors=sponsors)
+
+
+@app.route('/rate_influencer/<int:id>', methods=['POST'])
+@login_required
+def rate_influencer(id):
+    influencer = User.query.get_or_404(id)
+    rating = request.form.get('rating')
+    
+    if rating:
+        try:
+            rating = float(rating)
+            if 0 <= rating <= 5:
+                influencer.rating = rating
+                db.session.commit()
+                flash('Rating updated successfully!', 'success')
+            else:
+                flash('Rating must be between 0 and 5.', 'danger')
+        except ValueError:
+            flash('Invalid rating value.', 'danger')
+    else:
+        flash('Rating cannot be empty.', 'danger')
+
+    return redirect(url_for('find_admin'))
+
+
+@app.route('/rate_sponsor/<int:id>', methods=['POST'])
+@login_required
+def rate_sponsor(id):
+    sponsor = User.query.get_or_404(id)
+    rating = request.form.get('rating')
+    
+    if rating:
+        try:
+            rating = float(rating)
+            if 0 <= rating <= 5:
+                sponsor.rating = rating
+                db.session.commit()
+                flash('Rating updated successfully!', 'success')
+            else:
+                flash('Rating must be between 0 and 5.', 'danger')
+        except ValueError:
+            flash('Invalid rating value.', 'danger')
+    else:
+        flash('Rating cannot be empty.', 'danger')
+
+    return redirect(url_for('find_admin'))
 
 
 
@@ -473,6 +526,57 @@ def delete_campaign(id):
     db.session.commit()
     flash('Campaign deleted successfully!', 'success')
     return redirect(url_for('campaigns'))
+
+
+
+@app.route('/delete_campaignx/<int:id>', methods=['POST'])
+@login_required
+def delete_campaignx(id):
+    campaign = Campaign.query.get_or_404(id)
+    db.session.delete(campaign)
+    db.session.commit()
+    flash('Campaign deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+
+@app.route('/delete_campaigna/<int:id>', methods=['POST'])
+@login_required
+def delete_campaigna(id):
+    campaign = Campaign.query.get_or_404(id)
+    db.session.delete(campaign)
+    db.session.commit()
+    flash('Campaign deleted successfully!', 'success')
+    return redirect(url_for('find_admin'))
+
+@app.route('/delete_influencer/<int:id>', methods=['POST'])
+def delete_influencer(id):
+    influencer = User.query.get_or_404(id)
+    db.session.delete(influencer)
+    db.session.commit()
+    flash('Influencer deleted successfully!', 'success')
+    return redirect(url_for('find_admin'))
+
+
+@app.route('/delete_ca/<int:id>', methods=['POST'])
+@login_required
+def delete_ca(id):
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('Campaign is deleted successfully!', 'success')
+    return redirect(url_for('find_admin'))
+
+
+@app.route('/delete_sponsor/<int:id>', methods=['POST'])
+@login_required
+def delete_sponsor(id):
+    user = User.query.get_or_404(id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('Sponsor is deleted successfully!', 'success')
+    return redirect(url_for('find_admin'))
+
 
 # Route to send request to influencer
 @app.route('/send_request/<int:id>', methods=['POST'])
@@ -561,37 +665,44 @@ def some_route():
     return redirect(url_for('request_s'))
 
 
-@app.route('/stats_admin')
-@login_required
-def stats_admin():
-    # Query the database to get counts
-    accepted_count = AdRequest.query.filter_by(status='Accepted').count()
-    rejected_count = AdRequest.query.filter_by(status='Rejected').count()
-    pending_count = AdRequest.query.filter_by(status='Pending').count()
-
-    # Render the template with the queried data
-    return render_template('stats_admin.html', 
-                           accepted_count=accepted_count, 
-                           rejected_count=rejected_count, 
-                           pending_count=pending_count)
-
-
-
 
 
 @app.route('/stats_sponsor')
 @login_required
 def stats_sponsor():
-    # Query the database to get counts
+    campaigns = Campaign.query.all()  # Assuming you have a Campaign model
+    campaigns_data = [{'name': c.name, 'budget': int(c.budget)} for c in campaigns]  # Cast budget to int
+    
     accepted_count = AdRequest.query.filter_by(status='Accepted').count()
     rejected_count = AdRequest.query.filter_by(status='Rejected').count()
     pending_count = AdRequest.query.filter_by(status='Pending').count()
-
-    # Render the template with the queried data
+    
     return render_template('stats_sponsor.html', 
                            accepted_count=accepted_count, 
                            rejected_count=rejected_count, 
-                           pending_count=pending_count)
+                           pending_count=pending_count,
+                           campaigns=campaigns_data,
+                           enumerate=enumerate)  # Pass enumerate to the template context
+
+
+@app.route('/stats_admin')
+@login_required
+def stats_admin():
+    campaigns = Campaign.query.all()  # Assuming you have a Campaign model
+    campaigns_data = [{'name': c.name, 'budget': int(c.budget)} for c in campaigns]  # Cast budget to int
+    
+    accepted_count = AdRequest.query.filter_by(status='Accepted').count()
+    rejected_count = AdRequest.query.filter_by(status='Rejected').count()
+    pending_count = AdRequest.query.filter_by(status='Pending').count()
+    
+    return render_template('stats_admin.html', 
+                           accepted_count=accepted_count, 
+                           rejected_count=rejected_count, 
+                           pending_count=pending_count,
+                           campaigns=campaigns_data,
+                           enumerate=enumerate)  # Pass enumerate to the template context
+
+
 
 
 

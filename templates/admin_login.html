@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="/static/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -15,14 +17,14 @@
         color: rgb(255, 255, 255); /* Default text color for all alerts */
     }
       #canvas{
-        background-color: #11390c;
+        background-color: #390c0c;
         height: 105vh;
         display: flex;
         align-items: center;
         justify-content: center;
     }
     #main{
- background-color: rgb(194, 16, 16);
+ background-color: rgb(0, 0, 0);
     }
     label{
 color: rgb(144, 0, 255);
@@ -30,6 +32,18 @@ color: rgb(144, 0, 255);
 span{
     color: rgb(255, 255, 255)
 }
+  
+#kaal {
+    background-color: rgb(33, 138, 243);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 0px;
+    margin-top: -90px;
+    height: 160px;
+}
+
+
+
 </style>
      <title>
 Admin Login
@@ -64,8 +78,8 @@ Admin Login
           <br>
           <br>
               <div class="btn-group w-100 mb-3" role="group" aria-label="Basic mixed styles example">
-                <a href="/influencer-login" class="btn btn-warning">Influencer Login</a>
-                <a href="/admin-login" class="btn btn-primary">&nbsp;&nbsp;Admin Login &nbsp;&nbsp;</a>
+                <a href="/influencer_login" class="btn btn-warning">Influencer Login</a>
+                <a href="/admin_login" class="btn btn-primary">&nbsp;&nbsp;Admin Login &nbsp;&nbsp;</a>
                 <a href="/sponsor-login" class="btn btn-success">Sponsor Login</a>
                 <br>
 
@@ -84,6 +98,12 @@ Admin Login
             </div>̥
         </div>
        </div>
+
+       <div id="footer">
+        <div class="border border-success p-2 mb-2" id="kaal">
+                      24dp2000041 © copyright 2024        
+        </div>
+  
       </body>
       </html>
       

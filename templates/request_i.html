@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css"> <!-- third party bootstrap -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Requests</title>
     <style>
@@ -58,10 +60,21 @@
             width: 100px;
             margin: 0 5px;
         }
+
+        #kaal {
+            background-color: rgb(33, 138, 243);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 0px;
+            margin-top: 380px;
+            height: 70px;
+        }
+        
+
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark" id="navi">
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top" id="navi">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Influencer's Dashboard</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,7 +103,6 @@
     </nav>
 
     <br>
-    <h1>Requests</h1>
     <br>
 
     <div class="container-fluid">
@@ -106,6 +118,9 @@
                     </div>
                 {% endif %}
                 {% endwith %}
+                <br>
+                <h1>Requests</h1>
+
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -145,5 +160,9 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+    <div class="border border-success p-2 mb-2" id="kaal">
+        24dp2000041 © copyright 2024        
+</div>
 </body>
 </html>
