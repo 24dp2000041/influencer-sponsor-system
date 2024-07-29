@@ -8,6 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Campaigns</title>
     <style>
+        h1 {
+            font-family: 'allura', sans-serif, Geneva, Verdana;
+            color: #000000;
+            font-weight: bold;
+            font-size: 70px;
+            margin-left: 250px;
+        }
+       
+       
         .inside {
             margin-left: 50px;
             margin-top: 50px;
@@ -90,12 +99,11 @@
                             <p class="card-text">Budget: ${{ campaign.budget }}</p>
                             <p class="card-text">Visibility: {{ campaign.visibility }}</p>
                             <p class="card-text">Goals: {{ campaign.goals }}</p>
-                            <!-- Button to trigger modal -->
+
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sendRequestModal-{{ campaign.id }}">
                                 Send Request
                             </button>
 
-                            <!-- Modal -->
                             <div class="modal fade" id="sendRequestModal-{{ campaign.id }}" tabindex="-1" aria-labelledby="sendRequestModalLabel-{{ campaign.id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -126,7 +134,6 @@
         </div>
     </div>
 
-    <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="border border-success p-2 mb-2" id="kaal">

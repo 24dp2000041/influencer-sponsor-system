@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Campaigns</title>
     <style>
+        h1 {
+            font-family: 'allura', sans-serif, Geneva, Verdana;
+            color: #000000;
+            font-weight: bold;
+            font-size: 70px;
+            margin-left: 250px;
+        }
+        
         .inside {
             margin-left: 50px;
             margin-top: 50px;
@@ -24,12 +31,11 @@
             color: rgb(255, 255, 255);
             text-align: center;
             padding: 0px;
-            margin-top: 180px;
+            margin-top: 480px;
             height: 70px;
         }
-        
-
-    </style>
+       
+   </style>
 </head>
 <body>    
     <div class="container1">    
@@ -157,12 +163,10 @@
                 {% endfor %}
             </div>
             
-            <!-- Button to trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerCampaignModal">
                 Register New Campaign
             </button>
 
-            <!-- Register Campaign Modal -->
             <div class="modal fade" id="registerCampaignModal" tabindex="-1" aria-labelledby="registerCampaignModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -211,7 +215,6 @@
             </div>
         </div>
     </div>
-    <!-- Include Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <div id="footer">
         <div class="border border-success p-2 mb-2" id="kaal">

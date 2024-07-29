@@ -6,17 +6,24 @@
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Find Campaigns and Influencers</title>
+    <title>Find</title>
     <style>
+        
+        #sp{
+            font-family: 'allura', sans-serif, Geneva, Verdana;
+            color: #000000;
+            font-weight: bold;
+            font-size: 70px;
+            margin-left: 250px;
+        }
+        
         .container1 {
             margin: 50px;
         }
         .search-form {
             margin-bottom: 20px;
         }
-        #sp {
-            font-size: 50px;
-        }
+        
         .star-rating {
             font-size: 1.5em;
             color: gold;
@@ -72,6 +79,8 @@
             </ul>
         </div>
     </nav>
+<br>
+<br>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -88,7 +97,7 @@
         <div class="search-form">
             <form method="GET" action="{{ url_for('find_admin') }}">
                 <div class="mb-3">
-                    <label for="search" class="form-label" id="sp">Search Campaigns and Influencers</label>
+                    <label for="search" class="form-label" id="sp">Manage Campaigns Influencers & Sponsors</label>
                     <input type="text" class="form-control" id="search" name="search" placeholder="Search..." required>
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>

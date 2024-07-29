@@ -31,15 +31,14 @@ def allowed_file(filename):
 def allowed_mime_type(file):
     return file.mimetype in ALLOWED_MIME_TYPES
 
-# Initialize the database
 db = SQLAlchemy(app)
 
-# Ensure upload folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
+UPLOAD_FOLDER = 'static/profile_pics/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Initialize Flask-Login
 login_manager = LoginManager()
 login_manager.login_view = 'sponsor_login'
 login_manager.init_app(app)
@@ -209,6 +208,9 @@ def update_user_details():
     user.role = request.form['role']
     user.info = request.form['info']
     db.session.commit()
+    flash('Details updated succesfully', 'success')
+
+    
     return redirect(url_for('sponsor_dashboard'))
 
 
@@ -223,6 +225,8 @@ def update_user_detail_influencer():
     user.role = request.form['role']
     user.info = request.form['info']
     db.session.commit()
+    flash('Profile Details updated successfully', 'success')
+
     return redirect(url_for('influencer_dashboard'))
 
 
@@ -233,7 +237,7 @@ def delete_requests():
     if request_ids:
         AdRequest.query.filter(AdRequest.id.in_(request_ids)).delete(synchronize_session=False)
         db.session.commit()
-        flash('Request deleted successfully!', 'success')
+        flash('Request deleted successfully!', 'danger')
     return redirect(url_for('request_s'))
 
 @app.route('/delete_requesti/<int:id>', methods=['POST'])
@@ -242,50 +246,99 @@ def delete_requesti(id):
     request_to_delete = AdRequest.query.get_or_404(id)
     db.session.delete(request_to_delete)
     db.session.commit()
-    flash('Request deleted successfully!', 'success')
+    flash('Request deleted successfully!', 'danger')
     return redirect(url_for('request_i'))
 
 
+
+
 @app.route('/update_profile_pic', methods=['POST'])
+@login_required
 def update_profile_pic():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
     if 'profile_pic' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['profile_pic']
-    if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
-    if file:
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
-        User.profile_pic = filename
-        db.session.commit()
-        flash('Profile picture updated successfully')
+        flash('No file part', 'danger')
         return redirect(url_for('influencer_dashboard'))
 
-@app.route('/update_profile_pic1', methods=['POST'])
-def update_profile_pic1():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    if 'profile_pic' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
     file = request.files['profile_pic']
     if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
+        flash('No selected file', 'danger')
+        return redirect(url_for('influencer_dashboard'))
+
     if file:
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
-        User.profile_pic = filename
+
+        # Update user profile picture in the database
+        user = current_user
+        user.profile_pic = filename
         db.session.commit()
-        flash('Profile picture updated successfully')
+
+        flash('Profile picture updated successfully', 'success')
+        return redirect(url_for('influencer_dashboard'))
+
+
+
+@app.route('/update_profile_picss', methods=['POST'])
+@login_required
+def update_profile_picss():
+    if 'profile_pic' not in request.files:
+        flash('No file part', 'danger')
+        return redirect(url_for('influencer_dashboard'))
+
+    file = request.files['profile_pic']
+    if file.filename == '':
+        flash('No selected file', 'danger')
+        return redirect(url_for('sponsor_dashboard'))
+
+    if file:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+
+        # Update user profile picture in the database
+        user = current_user
+        user.profile_pic = filename
+        db.session.commit()
+
+        flash('Profile picture updated successfully', 'success')
+        return redirect(url_for('sponsor_dashboard'))
+
+
+    
+
+@app.route('/update_profile_pic1', methods=['POST'])
+@login_required
+def update_profile_pic1():
+    if 'profile_pic' not in request.files:
+        flash('No file part', 'danger')
+        return redirect(url_for('influencer_dashboard'))
+
+    file = request.files['profile_pic']
+    if file.filename == '':
+        flash('No selected file', 'danger')
         return redirect(url_for('admin_dashboard'))
 
+    if file:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+
+        # Update user profile picture in the database
+        user = current_user
+        user.profile_pic = filename
+        db.session.commit()
+
+        flash('Profile picture updated successfully', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+
+    
+    
+    
+    
+    
+    
 @app.route('/sponsor-login', methods=['GET', 'POST'])
 def sponsor_login():
     if request.method == "POST":
@@ -310,7 +363,7 @@ def sponsor_dashboard():
 @app.route('/request_s')
 @login_required
 def request_s():
-    requests = AdRequest.query.all()
+    requests = db.session.query(AdRequest).join(Campaign).filter(Campaign.sponsor_id == current_user.id).all()
     return render_template('request_s.html', requests=requests)
 
 @app.route('/request_i')
@@ -318,8 +371,6 @@ def request_s():
 def request_i():
     user_requests = AdRequest.query.filter_by(influencer_id=current_user.id).all()
     return render_template('request_i.html', requests=user_requests)
-
-
 
 
 
@@ -335,8 +386,8 @@ def campaigni():
 @login_required
 def campaigns():
     # Fetch all campaigns from the database
-    all_campaigns = Campaign.query.all()
-    return render_template('campaigns.html', campaigns=all_campaigns)
+    campaigns = Campaign.query.filter_by(sponsor_id=current_user.id).all()
+    return render_template('campaigns.html', campaigns=campaigns)
 
 
 @app.route('/register_campaign', methods=['POST'])
@@ -413,7 +464,7 @@ def find_sponsor():
         ).filter(User.role == 'influencer').all()
     else:
         # If no search query, fetch all data
-        campaigns = Campaign.query.all()
+        campaigns = Campaign.query.filter_by(sponsor_id=current_user.id).all()
         influencers = User.query.filter(User.role == 'influencer').all()
 
     return render_template('find_sponsor.html', campaigns=campaigns, influencers=influencers)
@@ -524,7 +575,7 @@ def delete_campaign(id):
     campaign = Campaign.query.get_or_404(id)
     db.session.delete(campaign)
     db.session.commit()
-    flash('Campaign deleted successfully!', 'success')
+    flash('Campaign deleted successfully!', 'danger')
     return redirect(url_for('campaigns'))
 
 
@@ -535,7 +586,7 @@ def delete_campaignx(id):
     campaign = Campaign.query.get_or_404(id)
     db.session.delete(campaign)
     db.session.commit()
-    flash('Campaign deleted successfully!', 'success')
+    flash('Campaign deleted successfully!', 'danger')
     return redirect(url_for('admin_dashboard'))
 
 
@@ -546,7 +597,7 @@ def delete_campaigna(id):
     campaign = Campaign.query.get_or_404(id)
     db.session.delete(campaign)
     db.session.commit()
-    flash('Campaign deleted successfully!', 'success')
+    flash('Campaign deleted successfully!', 'danger')
     return redirect(url_for('find_admin'))
 
 @app.route('/delete_influencer/<int:id>', methods=['POST'])
@@ -554,7 +605,7 @@ def delete_influencer(id):
     influencer = User.query.get_or_404(id)
     db.session.delete(influencer)
     db.session.commit()
-    flash('Influencer deleted successfully!', 'success')
+    flash('Influencer deleted successfully!', 'danger')
     return redirect(url_for('find_admin'))
 
 
@@ -564,7 +615,7 @@ def delete_ca(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
-    flash('Campaign is deleted successfully!', 'success')
+    flash('Campaign is deleted successfully!', 'danger')
     return redirect(url_for('find_admin'))
 
 
@@ -574,7 +625,7 @@ def delete_sponsor(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
-    flash('Sponsor is deleted successfully!', 'success')
+    flash('Sponsor is deleted successfully!', 'danger')
     return redirect(url_for('find_admin'))
 
 
@@ -670,17 +721,9 @@ def some_route():
 @app.route('/stats_sponsor')
 @login_required
 def stats_sponsor():
-    campaigns = Campaign.query.all()  # Assuming you have a Campaign model
+    campaigns = Campaign.query.filter_by(sponsor_id=current_user.id).all()
     campaigns_data = [{'name': c.name, 'budget': int(c.budget)} for c in campaigns]  # Cast budget to int
-    
-    accepted_count = AdRequest.query.filter_by(status='Accepted').count()
-    rejected_count = AdRequest.query.filter_by(status='Rejected').count()
-    pending_count = AdRequest.query.filter_by(status='Pending').count()
-    
     return render_template('stats_sponsor.html', 
-                           accepted_count=accepted_count, 
-                           rejected_count=rejected_count, 
-                           pending_count=pending_count,
                            campaigns=campaigns_data,
                            enumerate=enumerate)  # Pass enumerate to the template context
 
@@ -711,10 +754,13 @@ def stats_admin():
 @app.route('/stats_influencer')
 @login_required
 def stats_influencer():
-    # Query the database to get counts
-    accepted_count = AdRequest.query.filter_by(status='Accepted').count()
-    rejected_count = AdRequest.query.filter_by(status='Rejected').count()
-    pending_count = AdRequest.query.filter_by(status='Pending').count()
+    
+    
+    
+    
+    accepted_count = AdRequest.query.filter_by(influencer_id=current_user.id,status='Accepted').count()
+    rejected_count = AdRequest.query.filter_by(influencer_id=current_user.id,status='Rejected').count()
+    pending_count = AdRequest.query.filter_by(influencer_id=current_user.id,status='Pending').count()
 
     # Render the template with the queried data
     return render_template('stats_influencer.html', 

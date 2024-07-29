@@ -10,10 +10,12 @@
     <title>Dashboard</title>
 
     <style>
-        h1{
-
-            margin-left:50px ;
-            font-size: 50px;
+        h1 {
+            font-family: 'allura', sans-serif, Geneva, Verdana;
+            color: #000000;
+            font-weight: bold;
+            font-size: 70px;
+            margin-left: 250px;
         }
         .profile-pic {
             width: 300px;
@@ -121,7 +123,6 @@
                 <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Profile Picture">
             </div>
 
-            <!-- Profile Picture Modal -->
             <div class="modal fade" id="profilePicModal" tabindex="-1" aria-labelledby="profilePicModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -129,7 +130,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="profilePicModalLabel">Upload New Profile Picture</h5>
                         </div>
-                        <form method="POST" action="{{ url_for('update_profile_pic') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url_for('update_profile_picss') }}" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="profile_pic" class="form-label">Choose a new profile picture:</label>
@@ -147,7 +148,6 @@
 
             <br>
 
-            <!-- Display user profile details -->
             <div class="container1">
                 <div class="row">
                     <div class="col">
@@ -169,12 +169,10 @@
                                 </div>
                             </div>
                             
-                            <!-- Button to trigger modal -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
                                 Update
                             </button>
 
-                            <!-- Update User Details Modal -->
                             <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
