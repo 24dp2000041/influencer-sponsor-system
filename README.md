@@ -9,9 +9,9 @@ Allowed Reuse of code for educational purposes
 $ cowsay said
 
 ########################################
- ___________
+
+
 < Good Luck!>
- -----------
             \   ^*^
              \ (oo-)\_*___
                (_)\      )\/\
